@@ -4,7 +4,7 @@ export default class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      title: ''
+      title: 'PLACEHOLDER'
     }
   }
 
@@ -16,6 +16,9 @@ export default class Form extends React.Component {
 
   pushTodo = (e) => {
     e.preventDefault();
+    if (this.state.title === '' || this.state.title === 'PLACEHOLDER') {
+      return;
+    }
     this.props.addTodo(e, this.state.title);
     this.setState({
       title: ''
@@ -26,7 +29,7 @@ export default class Form extends React.Component {
     return (
       <div>
         <form>
-          <input type="text" placeholder="Add Todo" onChange={this.handleChange}/>
+          <input type="text" placeholder={this.state.title} onChange={this.handleChange}/>
           <button onClick={this.pushTodo}>Add Todo</button>
         </form>
       </div>

@@ -3,42 +3,44 @@ import React from 'react'
 import TodoList from './TodoList'
 import Form from './Form'
 
-const toDo = [
-  {
-    title: 'Learn React',
-    id: Date.now(),
-    done: false,
-  },
-
-];
-
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      toDo
+      toDo: [
+        {
+          name: 'Organize Garage',
+          id: 1528817077286, // could look different, you could use a timestamp to generate it
+          completed: false
+        },
+        {
+          name: 'Bake Cookies',
+          id: 1528817084358,
+          completed: false
+        }
+      ]
     };
   }
 
   addTodo = (e, title) => {
     e.preventDefault();
     const newTodo = {
-      title: title,
+      name: title,
       id: Date.now(),
-      done: false,
+      completed: false,
     };
     this.setState({
       toDo: [...this.state.toDo, newTodo]
     });
   };
 
-  toggleDone = id => {
+  toggleCompleted = id => {
     this.setState({
       toDo: this.state.toDo.map(todo => {
         if (todo.id === id) {
           return {
             ...todo,
-            done: !todo.done
+            completed: !todo.completed
           };
         }
         return todo;
@@ -51,7 +53,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <TodoList toDo={this.state.toDo} toggleDone={this.toggleDone} />
+        <TodoList todo={this.state.toDo} toggleCompleted={this.toggleCompleted} />
+        <Form addTodo={this.addTodo} />
       </div>
     )
   }
